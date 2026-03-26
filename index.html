@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FORR MYY BABYYYY 💖</title>
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+  color:white;
+}
+
+/* soft floating background */
+body::before{
+  content:"💖 ✨ 💕 🌻 💞 ✨ 💖";
+  position:fixed;inset:0;
+  font-size:26px;
+  display:flex;flex-wrap:wrap;
+  justify-content:space-around;
+  align-items:space-around;
+  opacity:0.12;
+  animation: floatBg 20s linear infinite;
+}
+@keyframes floatBg{0%{transform:translateY(0)}100%{transform:translateY(-200px)}}
+
+#lock{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;background:#000;z-index:10;font-size:1.5rem}
+
+.card{
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  padding:20px;border-radius:20px;
+  max-width:90%;text-align:center;
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.02)}
+}
+
+#typing{
+  font-size:1.6rem;
+  text-shadow:0 0 5px #fff,0 0 15px #ff4d6d;
+}
+
+.heart{
+  font-size:40px;
+  animation: beat 1s infinite;
+}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+
+#loveText{
+  margin-top:5px;
+  font-size:1rem;
+  text-shadow:0 0 5px #fff,0 0 15px #ff4d6d;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+
+p{font-size:1rem;line-height:1.6}
+
+button{
+  margin-top:15px;padding:10px 20px;
+  border:none;border-radius:25px;
+  background:#ff4d6d;color:white;
+  position:relative;
+  overflow:hidden;
+}
+
+/* button ripple */
+button::after{
+  content:"";
+  position:absolute;
+  width:0;height:0;
+  background:rgba(255,255,255,0.4);
+  border-radius:50%;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  transition:0.5s;
+}
+button:active::after{
+  width:200px;height:200px;
+}
+
+canvas{position:fixed;top:0;left:0;pointer-events:none}
+
+#floating span{
+  position:fixed;
+  bottom:-20px;
+  animation:floatUp 6s linear forwards;
+}
+@keyframes floatUp{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-100vh);opacity:0}}
+
+.sparkle{
+  position:fixed;
+  font-size:14px;
+  animation: sparkle 3s linear infinite;
+}
+@keyframes sparkle{
+  0%{opacity:0;transform:scale(0.5)}
+  50%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(0.5)}
+}
+
+</style>
+</head>
+<body>
+
+<div id="lock" onclick="unlock()">tap to open 💌</div>
+<canvas id="confetti"></canvas>
+<div id="floating"></div>
+
+<div class="card">
+  <h2 id="typing"></h2>
+  <div class="heart">❤️</div>
+  <div id="loveText">I LOVE YOU RAFIII 💖</div>
+  <p id="msg"></p>
+  <button onclick="startAll()">tap me 💫</button>
+</div>
+
+<script>
+const textTitle = "FORR MYY BABYYYY 💖";
+const textMsg = "RAFIII MY BABYYY MY SHONAAA MY LOVEE MY CUTUUU I DONT EVEN KNOW HOW TO EXPLAIN THIS FEELINGG BUT I LOVEE YOUU SOOO MUCHHH AND I SWEARR I WILL MAKEE YOUU FEEL LIKE MY PRINCESSS ALWAYSSS NOT JUST IN WORDS BUT IN THE WAY I TREAT YOUUU CARE FOR YOUUU AND STAY WITH YOUUU I WANNA GIVE YOU ALL THE LOVEEE SOFTNESSS AND RESPECTTT YOU DESERVEEE AND MAKE YOU FEEL SPECIALLL EVERY SINGLE DAYYY I LOVEE YOUR SOULL YOUR HEARTT YOUR MINDD AND EVERYTHINGG THAT MAKES YOU YOUUU AND I PROMISEEE I WILL ALWAYS CHOOSE YOUUU PROTECT YOUR SMILEEE AND STAY BY YOUR SIDEEE NO MATTER WHATTT BECAUSE YOU MEAN EVERYTHINGG TO MEE ANDD BABYYY I LOVEEE YOUUU SOOOO MUCHHHHHHHH MWWWAAAAAAHHHHHHHHHHHHHHHH 💗";
+
+function unlock(){
+  document.getElementById('lock').style.display='none';
+  typeEffect(textTitle,'typing',50);
+}
+
+function typeEffect(text,id,speed){
+  let i=0;
+  function type(){
+    if(i<text.length){
+      document.getElementById(id).innerHTML+=text.charAt(i);
+      i++;setTimeout(type,speed);
+    }
+  }
+  type();
+}
+
+function startAll(){
+  typeEffect(textMsg,'msg',25);
+  startConfetti();spawnHearts();spawnSparkles();
+  document.getElementById('loveText').style.opacity='1';
+  if(navigator.vibrate) navigator.vibrate([100,50,100]);
+}
+
+const canvas=document.getElementById('confetti');
+const ctx=canvas.getContext('2d');
+canvas.width=innerWidth;canvas.height=innerHeight;
+let confetti=[];
+
+function createConfetti(){
+  for(let i=0;i<120;i++){
+    confetti.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*6+2,d:Math.random()*50,color:`hsl(${Math.random()*360},100%,70%)`});
+  }
+}
+
+function drawConfetti(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  confetti.forEach(c=>{
+    ctx.fillStyle=c.color;
+    ctx.fillRect(c.x,c.y,c.r,c.r);
+  });
+  confetti.forEach(c=>{
+    c.y+=Math.cos(c.d)+1;
+    c.x+=Math.sin(c.d);
+    if(c.y>canvas.height){c.y=0;c.x=Math.random()*canvas.width}
+  });
+}
+
+function startConfetti(){createConfetti();setInterval(drawConfetti,20)}
+
+function spawnHearts(){
+  const container=document.getElementById('floating');
+  for(let i=0;i<25;i++){
+    const el=document.createElement('span');
+    el.innerText=Math.random()>0.5?'❤':'BABYYY';
+    el.style.left=Math.random()*100+'vw';
+    container.appendChild(el);
+    // keep floating hearts forever (no removal)
+  }
+}
+
+function spawnSparkles(){
+  for(let i=0;i<20;i++){
+    const el=document.createElement('div');
+    el.className='sparkle';
+    el.innerText='✨';
+    el.style.left=Math.random()*100+'vw';
+    el.style.top=Math.random()*100+'vh';
+    document.body.appendChild(el);
+    // keep sparkles forever (no removal)
+  }
+}
+</script>
+
+</body>
+</html>
